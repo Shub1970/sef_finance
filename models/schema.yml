@@ -1,0 +1,124 @@
+
+version: 2
+
+sources:
+  - name: raw
+    database: sef_finance_database     # your DB name
+    schema: public              # postgres schema
+    tables:
+
+      - name: users
+        description: "User master data"
+        columns:
+          - name: user_id
+            description: "Primary key of user"
+            tests:
+              - not_null
+              - unique
+
+          - name: signup_date
+            description: "Date user signed up"
+            tests:
+              - not_null
+
+          - name: city
+            description: "City of the user"
+
+
+      - name: orders
+        description: "Customer orders"
+        columns:
+          - name: order_id
+            tests:
+              - not_null
+              - unique
+
+          - name: user_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'users')
+                  field: user_id
+
+          - name: order_date
+            tests:
+              - not_null
+
+          - name: amount
+            description: "Order value"
+
+          - name: status
+            description: "Order status (completed, refunded)"
+
+
+      - name: payments
+        description: "Payment transactions"
+        columns:
+          - name: payment_id
+            tests:
+              - not_null
+              - unique
+
+          - name: order_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'orders')
+                  field: order_id
+
+          - name: payment_method
+            description: "card / upi / cod"
+
+          - name: payment_status
+            description: "success / failed"
+
+
+      - name: int_completed_orders
+        description: "Only successful, completed orders joined with users and payments"
+        columns:
+          - name: order_id
+            tests:
+              - not_null
+
+      - name: analytics_revenue_by_city
+        description: "Total revenue generated from completed and successfully paid orders, aggregated by city."
+        columns:
+          - name: city
+            description: "City of the customer"
+            tests:
+              - not_null
+
+          - name: revenue
+            description: "Total revenue from that city"
+            tests:
+              - not_null
+
+
+      - name: analytics_daily_revenues
+        description: "Daily revenue trend based on completed orders with successful payments."
+        columns:
+          - name: date
+            description: "Date of the order"
+            tests:
+              - not_null
+              - unique   # only one row per day
+
+          - name: revenue
+            description: "Total revenue for that date"
+            tests:
+              - not_null
+
+
+      - name: analytics_order_per_user
+        description: "Number of orders placed by each user."
+        columns:
+          - name: user_id
+            description: "Unique user identifier"
+            tests:
+              - not_null
+              - unique
+
+          - name: total_orders
+            description: "Total number of orders placed by the user"
+            tests:
+              - not_null

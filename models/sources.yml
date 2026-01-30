@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: sef_finance_database 
+    description: "Raw data from the destination PostgreSQL database."
+    database: sef_finance_database
+    schema: public
+    tables:
+      - name: orders 
+        description: "List of orders."
+      - name: payments 
+        description: "List of Payments."
+      - name: users
+        description: "List of users."
