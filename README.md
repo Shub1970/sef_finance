@@ -85,7 +85,7 @@ CREATE TABLE orders (
 dbt requires a connection profile located at `~/.dbt/profiles.yml`. Create this file if it doesn't exist and add the following configuration:
 
 ```yaml
-sef_finance:
+[project name]:
   target: dev
   outputs:
     dev:
@@ -99,7 +99,7 @@ sef_finance:
       threads: 4
 ```
 
----
+## In my repo, project name is "sef_finance"
 
 ## 🏃 Running the Project
 
@@ -114,5 +114,12 @@ dbt run
 
 ```
 
----
+# 🛠️ What Transformations I have applied and why
 
+## In the Intermediate Model dir, i have created two Models
+
+Finding out all the order which is completed and payment status is success /models/intermediate/int_completed_orders.sql
+
+another Transformations is for failed order and payment status as refund /models/intermediate/
+
+---
