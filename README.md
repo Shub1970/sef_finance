@@ -116,11 +116,3 @@ dbt run
 
 ---
 
-### Pro-Tips for your README:
-
-- **Hyperlinks:** I changed `[project-name]` to the actual `sef_finance` name in the code block to reduce confusion.
-- **Admonitions:** Using the `> **Note:**` block helps important warnings stand out.
-- **Language Tags:** Always use `bash`, `sql`, or `yaml` after the triple backticks (```) so GitHub applies the correct color coding.
-
-**Would you like me to add a "Project Structure" section to explain what each dbt folder does?**
-
