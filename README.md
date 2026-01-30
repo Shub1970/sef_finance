@@ -16,8 +16,8 @@ Clone the repository and set up your virtual environment:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Shub1970/dbt-learning.git
-cd dbt-learning
+git clone https://github.com/Shub1970/sef_finance
+cd sef_finance
 
 # Create a virtual environment
 uv venv
