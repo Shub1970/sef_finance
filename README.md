@@ -116,6 +116,19 @@ dbt run
 
 ```
 
+### 💡 Troubleshooting
+
+If you see an error while running `dbt debug`, try deactivating and reactivating the virtual environment:
+
+```bash
+deactivate
+
+# Reactivate
+# macOS/Linux: source .venv/bin/activate
+# Windows: .venv\Scripts\activate
+
+```
+
 ### Generate & View Documentation
 
 dbt creates a beautiful, interactive documentation site that includes your lineage graph (DAG).
