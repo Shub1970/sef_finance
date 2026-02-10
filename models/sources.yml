@@ -4,7 +4,7 @@ sources:
   - name: sef_finance_database 
     description: "Raw data from the destination PostgreSQL database."
     database: sef_finance_database
-    schema: raw
+    schema: public_raw
     tables:
       - name: orders 
         description: "List of orders."

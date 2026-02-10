@@ -49,38 +49,28 @@ dbt deps
 
 ### 1. Create the Database
 
-Open your PostgreSQL terminal or pgAdmin4 and run the following to initialize your schema:
+Open your PostgreSQL terminal or pgAdmin4 and create the database:
 
 ```sql
 CREATE DATABASE sef_finance_database;
-
--- Switch to the new database and create tables
-CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
-    signup_date DATE NOT NULL,
-    city VARCHAR(100)
-);
-
-CREATE TABLE payments (
-    payment_id INT PRIMARY KEY,
-    order_id INT NOT NULL,
-    payment_method VARCHAR(50),
-    payment_status VARCHAR(20)
-);
-
-CREATE TABLE orders (
-    order_id INT PRIMARY KEY,
-    user_id INT NOT NULL,
-    order_date DATE NOT NULL,
-    amount NUMERIC(10,2),
-    status VARCHAR(20)
-);
-
 ```
 
-> **Note:** After creating the tables, please seed them with your CSV data using pgAdmin4 or the `COPY` command.
+### 2. Load Seed Data
 
-### 2. Configure `profiles.yml` (Critical)
+This project uses **dbt seeds** to load raw data from CSV files into the database. The seed files are located in the `seeds/` directory:
+- `users.csv` - User information
+- `orders.csv` - Order transactions  
+- `payments.csv` - Payment records
+
+The seeds are automatically configured in `dbt_project.yml` with proper schema and column types. To load the seed data, run:
+
+```bash
+dbt seed
+```
+
+This will create the tables in the `public_raw` schema (dbt concatenates the target schema `public` with the seed schema) and populate them with data from the CSV files.
+
+### 3. Configure `profiles.yml` (Critical)
 
 dbt requires a connection profile located at `~/.dbt/profiles.yml`. Create this file if it doesn't exist and add the following configuration:
 
@@ -110,6 +100,9 @@ Once the setup is complete, verify your connection and run the models:
 ```bash
 # Check connection
 dbt debug
+
+# Load seed data (raw tables from CSV)
+dbt seed
 
 # Run all models
 dbt run
