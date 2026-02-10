@@ -10,9 +10,30 @@ clean-targets:
   - "dbt_packages"
 
 seeds:
-  # Builds seeds into '<your_schema_name>_raw'
   sef_finance:
     +schema: raw
+    +quote_columns: false
+
+    users_seed:
+      +column_types:
+        user_id: integer
+        signup_date: date
+        city: varchar(100)
+
+    orders_seed:
+      +column_types:
+        order_id: integer
+        user_id: integer
+        order_date: date
+        amount: numeric(10,2)
+        status: varchar(20)
+
+    payments_seed:
+      +column_types:
+        payment_id: integer
+        order_id: integer
+        payment_method: varchar(50)
+        payment_status: varchar(20)
 
 models:
   sef_finance:
