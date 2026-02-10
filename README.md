@@ -41,6 +41,9 @@ uv pip install dbt-core dbt-postgres
 # Install dbt packages (defined in packages.yml)
 dbt deps
 
+# Setup dbt connection profile
+uv run setup.py
+
 ```
 
 ---
@@ -70,26 +73,17 @@ dbt seed
 
 This will create the tables in the `public_raw` schema (dbt concatenates the target schema `public` with the seed schema) and populate them with data from the CSV files.
 
-### 3. Configure `profiles.yml` (Critical)
+### 3. Configure Database Connection
 
-dbt requires a connection profile located at `~/.dbt/profiles.yml`. Create this file if it doesn't exist and add the following configuration:
+Run the setup script to create your dbt connection profile:
 
-```yaml
-sef_finance:
-  target: dev
-  outputs:
-    dev:
-      type: postgres
-      host: [your-host]
-      user: [your-username]
-      password: [your-password]
-      port: [your-port]
-      dbname: sef_finance_database
-      schema: public
-      threads: 4
+```bash
+uv run setup.py
 ```
 
-_In this repository, the project name is set to **"sef_finance"**._
+This will prompt you for your PostgreSQL credentials and create `~/.dbt/profiles.yml` automatically.
+
+_Alternatively, you can manually create `~/.dbt/profiles.yml` with your connection details._
 
 ---
 
@@ -98,6 +92,9 @@ _In this repository, the project name is set to **"sef_finance"**._
 Once the setup is complete, verify your connection and run the models:
 
 ```bash
+# Setup database connection (creates ~/.dbt/profiles.yml)
+uv run setup.py
+
 # Check connection
 dbt debug
 
